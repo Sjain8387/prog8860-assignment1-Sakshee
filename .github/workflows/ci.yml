@@ -1,0 +1,26 @@
+name: Node.js Docker CI
+
+on:
+  push:  # Trigger the workflow on push
+    branches:
+      - main # Modify to any branch you're working on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t node-app .
+
+      - name: Run Docker container
+        run: docker run -d -p 3000:3000 node-app --name assignment1
+
+      - name: Show running container
+        run: docker ps
+
+      - name: Stop container
+        run: docker stop assignment1
